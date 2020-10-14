@@ -10,6 +10,9 @@ class QRView extends StatefulWidget {
   const QRView({
     @required Key key,
     @required this.onQRViewCreated,
+    @required this.title,
+    @required this.subtitle,
+    @required this.flashWidget,
     this.overlay,
   })  : assert(key != null),
         assert(onQRViewCreated != null),
@@ -18,12 +21,16 @@ class QRView extends StatefulWidget {
   final QRViewCreatedCallback onQRViewCreated;
 
   final ShapeBorder overlay;
+  final Widget title;
+  final Widget subtitle;
+  final Widget flashWidget;
 
   @override
   State<StatefulWidget> createState() => _QRViewState();
 }
 
 class _QRViewState extends State<QRView> {
+  bool isFlash;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -37,6 +44,31 @@ class _QRViewState extends State<QRView> {
           )
         else
           Container(),
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 50,),
+              widget.title,
+              widget.subtitle
+            ],
+          ),
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              SizedBox(height: 100,),
+              widget.flashWidget
+            ],
+          ),
+        )
       ],
     );
   }
